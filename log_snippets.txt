@@ -1,0 +1,13 @@
+console.log(
+    `\n\nSUCCESS:
+    \n***************\n
+    <something>
+    \n***************\n\n`
+)
+
+console.log(
+    "\n\nERROR ENCOUNTERED:
+    \n***************\n" +
+    err +
+    "\n***************\n\n"
+)
