@@ -11,3 +11,7 @@ console.log(
     err +
     "\n***************\n\n"
 )
+
+//for .gitignore
+/node_modules
+package-lock.json
