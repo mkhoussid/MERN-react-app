@@ -15,3 +15,10 @@ console.log(
 //for .gitignore
 /node_modules
 package-lock.json
+
+> Clone Repo
+> Run
+	npm install
+	npm run client-install
+> To start servers concurrently
+	npm run dev
