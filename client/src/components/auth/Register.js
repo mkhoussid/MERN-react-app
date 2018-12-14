@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions"; //import action, curly brackets
@@ -43,7 +44,7 @@ class Register extends Component {
     };
 
     //actions are called through props
-    this.props.registerUser(newUser);
+    this.props.registerUser(newUser, this.props.history); //<-- allows us to redirect from within this action
   }
 
   render() {
@@ -155,7 +156,7 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { registerUser } //second parameter is where actions are mapped
-)(Register);
+)(withRouter(Register));
 
 //Workflow
 //commit action registerUser in authAction file
