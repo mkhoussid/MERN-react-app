@@ -24,9 +24,9 @@ class Login extends Component {
     console.log(user);
   }
 
-  onChange(e) {
+  onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
-  }
+  };
 
   render() {
     return (
