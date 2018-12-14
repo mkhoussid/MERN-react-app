@@ -20,6 +20,13 @@ class Register extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  //if user is logged in, make sure they cant go to /register or /login
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+  }
+
   //get errors from redux state (gets put into props with mapStateToProps)
   componentWillReceiveProps(nextProps) {
     //once new properties are received

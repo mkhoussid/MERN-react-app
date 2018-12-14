@@ -51,3 +51,13 @@ export const setCurrentUser = decoded => {
     payload: decoded
   };
 };
+
+//logout user
+export const logoutUser = () => dispatch => {
+  //remove token from localstorage
+  localStorage.removeItem("jwtToken");
+  //remove auth header for future requests
+  setAuthToken(false);
+  //set current user to empty object, which will also set isAuthenticated to false
+  dispatch(setCurrentUser({})); //this sets initialState back to initial state (no user logged in) from reducer
+};

@@ -17,6 +17,13 @@ class Login extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  //if user is logged in, make sure they cant go to /register or /login
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
