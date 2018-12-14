@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import classnames from "classnames";
 
 class Register extends Component {
   constructor() {
@@ -30,14 +31,19 @@ class Register extends Component {
       password2: this.state.password2
     };
 
+    //axios to test backend api routes
     axios
       .post("/api/users/register", newUser)
       .then(res => console.log(res.data))
       //.catch(err => console.log(err)); if you want to see errors in network tab of dev tools
-      .catch(err => console.log(err.response.data)); //to retrieve actual object and errors in console
+      //.catch(err => console.log(err.response.data)); //to retrieve actual object and errors in console
+      .catch(err => this.setState({ errors: err.response.data })); //set which specific error
   }
 
   render() {
+    //destructure errors from state by creating new const variable
+    const { errors } = this.state; // same as 'const errors = this.state.errors;'
+
     return (
       <div>
         <div className="register">
@@ -48,26 +54,37 @@ class Register extends Component {
                 <p className="lead text-center">
                   Create your Dev<span className="lt">&lt;</span>-n account
                 </p>
-                <form onSubmit={this.onSubmit}>
+                <form noValidate onSubmit={this.onSubmit}>
                   <div className="form-group">
                     <input
                       type="text"
-                      className="form-control form-control-lg"
+                      //default classes
+                      className={classnames("form-control form-control-lg", {
+                        "is-invalid": errors.name //<-- depending on which Validator is hit at function validateRegisterInput)
+                      })}
                       placeholder="Name"
                       name="name"
                       value={this.state.name}
                       onChange={this.onChange}
                     />
+                    {errors.name && (
+                      <div className="invalid-feedback">{errors.name}</div>
+                    )}
                   </div>
                   <div className="form-group">
                     <input
                       type="email"
-                      className="form-control form-control-lg"
+                      className={classnames("form-control form-control-lg", {
+                        "is-invalid": errors.email
+                      })}
                       placeholder="Email Address"
                       value={this.state.email}
                       onChange={this.onChange}
                       name="email"
                     />
+                    {errors.email && (
+                      <div className="invalid-feedback">{errors.email}</div>
+                    )}
                     <small className="form-text text-muted">
                       This site uses Gravatar so if you want a profile image,
                       use a Gravatar email
@@ -76,22 +93,32 @@ class Register extends Component {
                   <div className="form-group">
                     <input
                       type="password"
-                      className="form-control form-control-lg"
+                      className={classnames("form-control form-control-lg", {
+                        "is-invalid": errors.password
+                      })}
                       placeholder="Password"
                       value={this.state.password}
                       onChange={this.onChange}
                       name="password"
                     />
+                    {errors.password && (
+                      <div className="invalid-feedback">{errors.password}</div>
+                    )}
                   </div>
                   <div className="form-group">
                     <input
                       type="password"
-                      className="form-control form-control-lg"
+                      className={classnames("form-control form-control-lg", {
+                        "is-invalid": errors.password2
+                      })}
                       placeholder="Confirm Password"
                       value={this.state.password2}
                       onChange={this.onChange}
                       name="password2"
                     />
+                    {errors.password2 && (
+                      <div className="invalid-feedback">{errors.password2}</div>
+                    )}
                   </div>
                   <input
                     type="submit"
