@@ -160,7 +160,10 @@ export default connect(
 )(Register);
 
 //Workflow
-//call registerUser
-//dispatch to reducer
-//fill user object
-//test for user with mapped action to component
+//commit action registerUser in authAction file
+//in registerUser, we created a type of TEST_DISPATCH (simple string for testing) and payload
+//those two were send to reducer
+//inside reducer (authReducer.js), we manipulated state to include the new user
+//in component Register.js, mapped state to props in mapStateToProps function
+//we set auth in mapStatetoProps to be part of component
+//then we just grabbed the user from the auth prop and displayed it in the DOM
