@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import axios from "axios";
 import classnames from "classnames";
+import { connect } from "react-redux";
+import { registerUser } from "../../actions/authActions"; //import action, curly brackets
 
 class Register extends Component {
   constructor() {
@@ -31,22 +34,29 @@ class Register extends Component {
       password2: this.state.password2
     };
 
-    //axios to test backend api routes
-    axios
-      .post("/api/users/register", newUser)
-      .then(res => console.log(res.data))
-      //.catch(err => console.log(err)); if you want to see errors in network tab of dev tools
-      //.catch(err => console.log(err.response.data)); //to retrieve actual object and errors in console
-      .catch(err => this.setState({ errors: err.response.data })); //set which specific error
+    //actions are called through props
+    this.props.registerUser(newUser);
+
+    // //axios to test backend api routes
+    // axios
+    //   .post("/api/users/register", newUser)
+    //   .then(res => console.log(res.data))
+    //   //.catch(err => console.log(err)); if you want to see errors in network tab of dev tools
+    //   //.catch(err => console.log(err.response.data)); //to retrieve actual object and errors in console
+    //   .catch(err => this.setState({ errors: err.response.data })); //set which specific error
   }
 
   render() {
     //destructure errors from state by creating new const variable
     const { errors } = this.state; // same as 'const errors = this.state.errors;'
 
+    //destructure to pull out user
+    const { user } = this.props.auth;
+
     return (
       <div>
         <div className="register">
+          {user ? user.name : null}
           <div className="container">
             <div className="row">
               <div className="col-md-8 m-auto">
@@ -134,4 +144,23 @@ class Register extends Component {
   }
 }
 
-export default Register;
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+//access state through props
+const mapStateToProps = state => ({
+  auth: state.auth //comes from rootReducer
+});
+
+export default connect(
+  mapStateToProps,
+  { registerUser } //second parameter is where actions are mapped
+)(Register);
+
+//Workflow
+//call registerUser
+//dispatch to reducer
+//fill user object
+//test for user with mapped action to component
