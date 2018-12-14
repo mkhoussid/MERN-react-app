@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions"; //import action, curly brackets
@@ -20,6 +19,15 @@ class Register extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  //get errors from redux state (gets put into props with mapStateToProps)
+  componentWillReceiveProps(nextProps) {
+    //once new properties are received
+    if (nextProps.errors) {
+      // if errors are included, set to component state (above on line ~15)
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -36,27 +44,15 @@ class Register extends Component {
 
     //actions are called through props
     this.props.registerUser(newUser);
-
-    // //axios to test backend api routes
-    // axios
-    //   .post("/api/users/register", newUser)
-    //   .then(res => console.log(res.data))
-    //   //.catch(err => console.log(err)); if you want to see errors in network tab of dev tools
-    //   //.catch(err => console.log(err.response.data)); //to retrieve actual object and errors in console
-    //   .catch(err => this.setState({ errors: err.response.data })); //set which specific error
   }
 
   render() {
     //destructure errors from state by creating new const variable
     const { errors } = this.state; // same as 'const errors = this.state.errors;'
 
-    //destructure to pull out user
-    const { user } = this.props.auth;
-
     return (
       <div>
         <div className="register">
-          {user ? user.name : null}
           <div className="container">
             <div className="row">
               <div className="col-md-8 m-auto">
@@ -146,12 +142,14 @@ class Register extends Component {
 
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 //access state through props
 const mapStateToProps = state => ({
-  auth: state.auth //comes from rootReducer
+  auth: state.auth, //comes from rootReducer
+  errors: state.errors
 });
 
 export default connect(
