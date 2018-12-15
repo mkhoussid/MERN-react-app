@@ -184,7 +184,7 @@ class CreateProfile extends Component {
                   info="City or city & state suggested (eg. Toronto, ON, Boston, MA)"
                 />
                 <TextFieldGroup
-                  placeholder="Skills"
+                  placeholder="* Skills"
                   name="skills"
                   value={this.state.skills}
                   onChange={this.onChange}
