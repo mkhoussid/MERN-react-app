@@ -8,9 +8,11 @@ import {
 import Spinner from "../common/Spinner";
 import { Link } from "react-router-dom";
 import ProfileActions from "./ProfileActions";
+import Experience from "./Experience";
+import { pathToFileURL } from "url";
 
 class Dashboard extends Component {
-  //to call it right away, use lifecycle method
+  //to call it right away, use lifecycle method to fill current profile
   componentDidMount() {
     this.props.getCurrentProfile();
   }
@@ -37,7 +39,7 @@ class Dashboard extends Component {
               Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
             </p>
             <ProfileActions />
-            {/* ToDO: experience and education */}
+            <Experience experience={profile.experience} />
             <div style={{ marginBottom: "60px" }} />
             <button
               onClick={this.onDeleteClick.bind(this)}
