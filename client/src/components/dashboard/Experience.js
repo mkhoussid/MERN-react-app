@@ -23,7 +23,6 @@ class Experience extends Component {
             <Moment format="YYYY/MM/DD">{exp.to}</Moment>
           )}
         </td>
-
         <td>
           <button
             onClick={this.onDeleteClick.bind(this, exp._id)}
