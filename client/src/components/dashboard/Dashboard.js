@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 import ProfileActions from "./ProfileActions";
 import Experience from "./Experience";
 import Education from "./Education";
-import { pathToFileURL } from "url";
 
 class Dashboard extends Component {
   //to call it right away, use lifecycle method to fill current profile
