@@ -15,6 +15,9 @@ class ProfileGithub extends Component {
   }
 
   componentDidMount() {
+    console.log(
+      "\n|\n|\n|\n|\n|\n|\n|\n|\n|\n-----------componentDidMount------------\n|\n|\n|\n|\n|\n|\n|\n|\n|\n"
+    );
     const { username } = this.props; //coming from component props
     const { count, sort, clientId, clientSecret } = this.state; //coming from above state
 
@@ -32,48 +35,52 @@ class ProfileGithub extends Component {
 
   render() {
     const { repos } = this.state;
-    const repoItems = repos.map(repo => (
-      <div key={repo.id} className="card card-body mb-2">
-        <div className="row">
-          <div className="col-md-6">
-            <h4>
-              {/*
-                ToDO: figure out why Link isnt working; temporarily using 'a href'
-                <Link
+
+    let repoItems;
+
+    if (repos.message === "Not Found") {
+      repoItems = [];
+    } else {
+      repoItems = repos.map(repo => (
+        <div key={repo.id} className="card card-body mb-2">
+          <div className="row">
+            <div className="col-md-6">
+              <h4>
+                {/* <Link
                   to={repo.html_url}
                   className="text-info"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   {repo.name}
-                </Link>
-              */}
-              <a
-                href={repo.html_url}
-                className="text-info"
-                target="_blank"
-                rel="noopener noreferrer"
-                alt={"Repository: " + repo.name}
-              >
-                {repo.name}
-              </a>
-            </h4>
-            <p>{repo.description}</p>
-          </div>
-          <div className="col-md-6">
-            <span className="badge badge-info mr-1">
-              Stars: {repo.stargazers_count}
-            </span>
-            <span className="badge badge-secondary mr-1">
-              Watchers: {repo.watchers.count}
-            </span>
-            <span className="badge badge-success">
-              Forks: {repo.forks_count}
-            </span>
+                </Link> */}
+                <a
+                  href={repo.html_url}
+                  className="text-info"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  alt={"Repository: " + repo.name}
+                >
+                  {repo.name}
+                </a>
+              </h4>
+              <p>{repo.description}</p>
+            </div>
+            <div className="col-md-6">
+              <span className="badge badge-info mr-1">
+                Stars: {repo.stargazers_count}
+              </span>
+              <span className="badge badge-secondary mr-1">
+                Watchers: {repo.watchers.count}
+              </span>
+              <span className="badge badge-success">
+                Forks: {repo.forks_count}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-    ));
+      ));
+    }
     return (
       <div ref="myRef">
         <hr />
